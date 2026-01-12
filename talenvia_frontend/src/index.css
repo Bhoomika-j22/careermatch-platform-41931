@@ -1,13 +1,351 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Candy Pop Theme (global)
+   - Sweet pastels & bright accents
+   - Playful rounded corners + soft shadows + gradients
+*/
+:root {
+  /* Style guide colors */
+  --cp-primary: #f472b6;
+  --cp-secondary: #a78bfa;
+  --cp-success: #10b981;
+  --cp-error: #ef4444;
+
+  --cp-bg: #fef7ff;
+  --cp-surface: #ffffff;
+  --cp-text: #374151;
+
+  /* Extra supporting colors */
+  --cp-muted: #6b7280;
+  --cp-border: rgba(55, 65, 81, 0.12);
+  --cp-shadow: 0 12px 30px rgba(17, 24, 39, 0.10);
+
+  --cp-gradient: linear-gradient(135deg, #f9a8d4 0%, #d8b4fe 45%, #93c5fd 100%);
+  --cp-gradient-soft: linear-gradient(135deg, rgba(244, 114, 182, 0.18) 0%, rgba(167, 139, 250, 0.16) 55%, rgba(147, 197, 253, 0.18) 100%);
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+
+  --focus-ring: 0 0 0 4px rgba(244, 114, 182, 0.25);
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+
+  --sidebar-width: 260px;
+  --topbar-height: 64px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--cp-text);
+  background: var(--cp-bg);
+}
+
+/* Accessibility: visible focus */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius-sm);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+/* ---------- Common UI primitives ---------- */
+.cp-container {
+  width: min(1100px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.cp-card {
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--cp-shadow);
+}
+
+.cp-card-pad {
+  padding: 16px;
+}
+
+.cp-btn {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.08s ease, filter 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cp-btn:active {
+  transform: translateY(1px);
+}
+
+.cp-btn-primary {
+  background: var(--cp-primary);
+  color: #fff;
+}
+
+.cp-btn-secondary {
+  background: var(--cp-secondary);
+  color: #fff;
+}
+
+.cp-btn-ghost {
+  background: transparent;
+  border: 1px solid var(--cp-border);
+  color: var(--cp-text);
+}
+
+.cp-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  border: 1px solid var(--cp-border);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.cp-badge-success {
+  border-color: rgba(16, 185, 129, 0.25);
+  background: rgba(16, 185, 129, 0.12);
+  color: #065f46;
+}
+
+.cp-badge-warn {
+  border-color: rgba(244, 114, 182, 0.25);
+  background: rgba(244, 114, 182, 0.12);
+  color: #9d174d;
+}
+
+.cp-muted {
+  color: var(--cp-muted);
+}
+
+.cp-input,
+.cp-select,
+.cp-textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--cp-border);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.cp-input:focus,
+.cp-select:focus,
+.cp-textarea:focus {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  background: #fff;
+}
+
+.cp-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.cp-spacer-8 {
+  height: 8px;
+}
+.cp-spacer-12 {
+  height: 12px;
+}
+.cp-spacer-16 {
+  height: 16px;
+}
+.cp-spacer-24 {
+  height: 24px;
+}
+
+/* ---------- App shell ---------- */
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: var(--topbar-height) 1fr;
+}
+
+.topbar {
+  height: var(--topbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--cp-border);
+  background: var(--cp-gradient-soft);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-bubble {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  background: var(--cp-gradient);
+  box-shadow: 0 8px 18px rgba(167, 139, 250, 0.25);
+}
+
+.brand-title {
+  font-weight: 900;
+  letter-spacing: 0.3px;
+}
+
+.shell-body {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr;
+  min-height: calc(100vh - var(--topbar-height));
+}
+
+.sidebar {
+  border-right: 1px solid var(--cp-border);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  padding: 14px;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nav-link {
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid transparent;
+  font-weight: 700;
+  color: var(--cp-text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nav-link:hover {
+  background: rgba(244, 114, 182, 0.09);
+  border-color: rgba(244, 114, 182, 0.18);
+}
+
+.nav-link.active {
+  background: rgba(167, 139, 250, 0.12);
+  border-color: rgba(167, 139, 250, 0.22);
+}
+
+.main {
+  padding: 18px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.banner {
+  border: 1px dashed rgba(244, 114, 182, 0.5);
+  background: rgba(244, 114, 182, 0.10);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-weight: 600;
+}
+
+/* User menu */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--cp-border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.75);
+}
+
+/* Simple modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 24, 39, 0.38);
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  z-index: 50;
+}
+
+.modal {
+  width: min(680px, 100%);
+  border-radius: var(--radius-lg);
+  background: var(--cp-surface);
+  border: 1px solid var(--cp-border);
+  box-shadow: 0 22px 60px rgba(17, 24, 39, 0.25);
+  overflow: hidden;
+}
+
+.modal-head {
+  padding: 14px 16px;
+  background: var(--cp-gradient-soft);
+  border-bottom: 1px solid var(--cp-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-body {
+  padding: 16px;
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+  .shell-body {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--cp-border);
+  }
 }

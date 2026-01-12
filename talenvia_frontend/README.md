@@ -1,82 +1,66 @@
-# Lightweight React Template for KAVIA
+# Talenvia Frontend (React)
 
-This project provides a minimal React template with a clean, modern UI and minimal dependencies.
+Talenvia is a Candy Pop themed job searching platform UI with modules for job browsing, saved jobs, application tracking, mock tests, challenges/badges, notifications, and an AI mentor chat UI.
 
-## Features
-
-- **Lightweight**: No heavy UI frameworks - uses only vanilla CSS and React
-- **Modern UI**: Clean, responsive design with KAVIA brand styling
-- **Fast**: Minimal dependencies for quick loading times
-- **Simple**: Easy to understand and modify
+This container is a CRA (Create React App) project and runs on port 3000 by default.
 
 ## Getting Started
 
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-### `npm test`
-
-Launches the test runner in interactive watch mode.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-## Customization
-
-### Colors
-
-The main brand colors are defined as CSS variables in `src/App.css`:
-
-```css
-:root {
-  --kavia-orange: #E87A41;
-  --kavia-dark: #1A1A1A;
-  --text-color: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
-  --border-color: rgba(255, 255, 255, 0.1);
-}
+```bash
+npm install
+npm start
 ```
 
-### Components
+Open: http://localhost:3000
 
-This template uses pure HTML/CSS components instead of a UI framework. You can find component styles in `src/App.css`. 
+## Routes
 
-Common components include:
-- Buttons (`.btn`, `.btn-large`)
-- Container (`.container`)
-- Navigation (`.navbar`)
-- Typography (`.title`, `.subtitle`, `.description`)
+- `/login`
+- `/dashboard`
+- `/jobs`
+- `/jobs/:id`
+- `/saved`
+- `/applications`
+- `/mentor`
+- `/tests`
+- `/challenges`
+- `/notifications`
+- `/profile`
 
-## Learn More
+## Environment Variables
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+All configuration is environment-driven. When backend URLs are not configured, the UI automatically falls back to local mock data and shows a non-blocking banner in the sidebar.
 
-### Code Splitting
+Required (for real auth):
+- `REACT_APP_SUPABASE_URL`
+- `REACT_APP_SUPABASE_KEY`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Optional (for real backend APIs):
+- `REACT_APP_API_BASE` (preferred) OR `REACT_APP_BACKEND_URL`
 
-### Analyzing the Bundle Size
+Optional (for real-time notifications):
+- `REACT_APP_WS_URL`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Optional behavior toggles:
+- `REACT_APP_FEATURE_FLAGS`
+  - JSON: `{"useMocks": true}`
+  - OR CSV: `useMocks=true,hideBackendBanner=true`
+- `REACT_APP_EXPERIMENTS_ENABLED` (`true`/`false`)
+- `REACT_APP_FRONTEND_URL` (used as Supabase `emailRedirectTo` during sign up)
 
-### Making a Progressive Web App
+## Feature Overview
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- **App Shell**: Top navigation (brand + user menu), left sidebar for feature access, responsive layout.
+- **Auth**: Supabase email/password auth. If Supabase env vars are missing, the app runs in **mock auth mode** so you can explore the UI.
+- **Jobs**: Browse/search/filter jobs, view job details, save/unsave jobs (local storage).
+- **Saved Jobs**: View saved jobs (local storage).
+- **Applications**: Status + timeline tracker (mocked until backend exists).
+- **AI Mentor**: Chat UI that calls a mock endpoint; TODO to connect a real mentor backend.
+- **Mock Tests**: List tests and complete an attempt flow with mock questions.
+- **Challenges & Badges**: Progress bars and badge display (mocked).
+- **Notifications**: Panel with WebSocket placeholder and env-driven WS URL; uses mock list by default.
 
-### Advanced Configuration
+## Notes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- This project intentionally avoids heavy UI frameworks; styling is implemented with vanilla CSS using the Candy Pop theme tokens.
+- For production auth + OAuth, configure providers in Supabase and set redirect URLs appropriately.
